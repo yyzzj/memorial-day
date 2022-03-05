@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div id="app">
+    <h1>验证是否我的爱人</h1>
+    <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="纪念日">
+            <!--style="width: 100%;"-->
+            <el-date-picker type="date" placeholder="选择日期"
+                            v-model="form.date"
+                            format="yyyy 年 MM 月 dd 日"
+                            value-format="yyyy-MM-dd"
+            ></el-date-picker>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="onSubmit">立即查看</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      form: {
+        date: '',
+      }
+    },
+    methods: {
+      onSubmit() {
+        if (this.form.date === "2019-05-21") {
+          window.location.href = './memorialDay.html'
+        } else {
+          this.$message.error('错误了噢！你根本不在意我！');
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>
