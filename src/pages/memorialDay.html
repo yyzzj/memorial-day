@@ -106,7 +106,7 @@
       timer(time) {
         const start = new Date(time).getTime(); // 2019-05-21 21:00:00
         const t = new Date().getTime() - start;
-        this.b = start
+
         const d = (t / 1000 / 60 / 60 / 24);
         const h = (t / 1000 / 60 / 60 % 24);
         const m = (t / 1000 / 60 % 60);
@@ -120,6 +120,7 @@
       }
     },
     mounted() {
+      this.b = new Date('2019-05-21 21:00:00').getTime();
       this.timer(this.date);
       const that = this;
       this.timerMethod = setInterval(() => {
