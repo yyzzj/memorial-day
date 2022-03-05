@@ -76,7 +76,9 @@
         <b id="minutes">{{ minutes }}</b> 分
         <b id="seconds">{{ seconds }}</b> 秒
     </div>
-    {{ a }}
+    a: {{ a }}
+    <br>
+    b :{{ b }}
     <div class="chest">
         <div class="heart left sided top"></div>
         <div class="heart center"></div>
@@ -97,18 +99,19 @@
       minutes: '',
       seconds: '',
       timerMethods: 0,
-      a: ''
+      a: '',
+      b: ''
     },
     methods: {
       timer(time) {
         const start = new Date(time).getTime(); // 2019-05-21 21:00:00
         const t = new Date().getTime() - start;
-
+        this.b = start
         const d = (t / 1000 / 60 / 60 / 24);
         const h = (t / 1000 / 60 / 60 % 24);
         const m = (t / 1000 / 60 % 60);
         const s = (t / 1000 % 60);
-        this.a = ~~d
+        this.a = start
         console.log((t / 1000 / 60 / 60 / 24), (t / 1000 / 60 / 60 % 24), (t / 1000 / 60 % 60), s)
         this.day = d < 10 ? "0" + d : d;
         this.hours = h < 10 ? "0" + h : h;
