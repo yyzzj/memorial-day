@@ -2,9 +2,128 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>倒计时</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        .chest {
+            width: 500px;
+            height: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .heart {
+            position: absolute;
+            z-index: 2;
+            background: linear-gradient(-90deg, #F50A45 0%, #d5093c 40%);
+            animation: beat 1s ease 0s infinite normal;
+        }
+
+        .heart.center {
+            background: linear-gradient(-45deg, #B80734 0%, #d5093c 40%);
+        }
+
+        .heart.top {
+            z-index: 3;
+        }
+
+        .sided {
+            top: 100px;
+            width: 220px;
+            height: 220px;
+            border-radius: 110px;
+        }
+
+        .center {
+            width: 210px;
+            height: 210px;
+            bottom: 100px;
+            left: 145px;
+            transform: rotateZ(225deg);
+        }
+
+        .left {
+            left: 62px;
+        }
+
+        .right {
+            right: 62px;
+        }
+
+        @keyframes beat {
+            0% {
+                transform: scale(1) rotate(225deg);
+                box-shadow: 0 0 40px #d5093c;
+            }
+            50% {
+                transform: scale(1.1) rotate(225deg);
+                box-shadow: 0 0 70px #d5093c;
+            }
+            100% {
+                transform: scale(1) rotate(225deg);
+                box-shadow: 0 0 40px #d5093c;
+            }
+        }
+    </style>
 </head>
 <body>
-<h1>"2019-05-21"</h1>
+<div id="app" style="margin-top: 50px">
+    <div style="text-align:center;font-size: 20px;padding-bottom: 10px">我们已经在一起了</div>
+    <div class="timer" style="text-align:center;font-size: 20px">
+        <b id="days">{{ day }}</b> 天
+        <b id="hours">{{ hours }}</b> 时
+        <b id="minutes">{{ minutes }}</b> 分
+        <b id="seconds">{{ seconds }}</b> 秒
+    </div>
+    <div class="chest">
+        <div class="heart left sided top"></div>
+        <div class="heart center"></div>
+        <div class="heart right sided"></div>
+    </div>
+</div>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      date: '2019-05-21 21:00:00',
+      day: '',
+      hours: '',
+      minutes: '',
+      seconds: '',
+      timerMethods: 0,
+    },
+    methods: {
+      timer(time) {
+        const start = new Date(time).getTime(); // 2019-05-21 21:00:00
+        const t = new Date().getTime() - start;
+
+        const d = ~~(t / 1000 / 60 / 60 / 24);
+        const h = ~~(t / 1000 / 60 / 60 % 24);
+        const m = ~~(t / 1000 / 60 % 60);
+        const s = ~~(t / 1000 % 60);
+
+        this.day = d < 10 ? "0" + d : d;
+        this.hours = h < 10 ? "0" + h : h;
+        this.minutes = m < 10 ? "0" + m : m;
+        this.seconds = s < 10 ? "0" + s : s;
+      }
+    },
+    mounted() {
+      this.timer(this.date);
+      const that = this;
+      this.timerMethod = setInterval(() => {
+        that.timer(that.date)
+      }, 1000);
+    },
+    beforeDestroy() {
+      clearInterval(this.timerMethod)
+    }
+  })
+</script>
 </body>
 </html>
